@@ -12,7 +12,7 @@ var DIR = process.env.HOME + '/.npmregistry';
  * @public
  */
 
-module.exports = usage;
+module.exports.usage = usage;
 module.exports.list = list;
 module.exports.add = add;
 module.exports.remove = remove;
