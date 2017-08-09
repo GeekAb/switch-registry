@@ -9,4 +9,5 @@ var args = process.argv.splice(process.execArgv.length + 2);
 // Retrieve the first argument as command to be followed
 var cmd = args[0] || 'usage';
 
+switcher.setup();
 switcher[cmd]();

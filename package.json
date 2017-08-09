@@ -25,6 +25,7 @@
   "homepage": "https://github.com/GeekAb/switch-registry#readme",
   "preferGlobal": true,
   "dependencies": {
-    "npm": "^5.3.0"
+    "npm": "^5.3.0",
+    "rc": "^1.2.1"
   }
 }
