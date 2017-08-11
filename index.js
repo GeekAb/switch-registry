@@ -52,8 +52,26 @@ function fetchFileData(str) {
     return data;
 }
 
+function showFormatedData(data) {
+	var displayStr = '';
+	for (var key in data) {
+		if (data.hasOwnProperty(key)) {
+			if(displayStr !== '') {
+				displayStr += ' | ';
+			}
+
+			if(key === 'active' && data[key] === true) {
+				displayStr = '>  ' + displayStr;
+			} else {
+    			displayStr += data[key];
+			}
+  		}
+	}
+
+	return displayStr;
+}
+
 function setup() {
-	console.log('checking');
 	//Create npmregistry
 	if (!fs.existsSync(RPATH)) {
 		//Create file
@@ -68,14 +86,12 @@ function setup() {
 
 	//Save current registry to registry file if its npmjs default registry
 	//TODO : Will check for npmjs thing later, right now considering current one as default
-	var regEntry = '>|'+url+'|default';
 
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
 		if (err){
 			console.log(err);
     		//TODO: Create file here and call add data function
 		} else {
-			console.log(data);
 			//Convert file data to Object -- At this point it will be blank
 			//TODO: Have to check if data is there
 			//TODO: If data is there then normal additon will happen only if it's not there
@@ -86,10 +102,9 @@ function setup() {
 			var newData = JSON.stringify(currData);
 			fs.writeFile(RPATH+'/'+FILENAME, newData, 'utf8', function(err) {
 				if (err) console.log(err);
-				console.log('complete');
 			});
-		}});
-		console.log('checking');
+		}
+	});
 }
 
 /**
@@ -97,7 +112,19 @@ function setup() {
  * @param {[type]} args [description]
  */
 function list (args) {
+	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
+		if (err){
+			console.log(err);
+    		//TODO: Create file here and call add data function
+		} else {
+			//Convert file data to Object -- At this point it will be blank
+			var currData = fetchFileData(data);
 
+			for(var key in currData) {
+				console.log(showFormatedData(currData[key]));
+			}
+		}
+	});
 };
 
 /**
