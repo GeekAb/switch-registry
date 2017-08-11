@@ -49,6 +49,26 @@ function setup() {
 		var url = ((c.registry).slice(-1) === '/' )? c.registry : c.registry + '/';
 
 		//Save current registry to registry file if its npmjs default registry
+		//TODO : Will check for npmjs thing later, right now considering current one as default
+		var regEntry = '>|'+url+'|default';
+
+		fs.readFile(RPATH, 'utf8', function readFileCallback(err, data){
+    		if (err){
+        		console.log(err);
+    		} else {
+				//Convert file data to Object -- At this point it will be blank
+				//TODO: Have to check if data is there
+				//TODO: If data is there then normal additon will happen only if it's not there
+    			var currData = JSON.parse(data);
+				//Adding default entry
+    			var currData.table.push({name: 'Default', active: true, url: url});
+				//Convert back to JSON string
+    			var newData = JSON.stringify(currData);
+    			fs.writeFile(RPATH, newData, 'utf8', function(err) {
+    				if (err) throw err;
+    				console.log('complete');
+    			});
+			}});
 	}
 }
 
