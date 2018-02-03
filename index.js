@@ -48,7 +48,9 @@ function fetchFileData(str) {
         data = JSON.parse(str);
     } catch (e) {
         return [];
-    }
+	}
+	console.log('finally coming here');
+	console.log(data);
     return data;
 }
 
@@ -71,38 +73,59 @@ function showFormatedData(data) {
 	return displayStr;
 }
 
-function setup() {
-	//Create npmregistry
-	if (!fs.existsSync(RPATH)) {
-		//Create file
-		fs.mkdirSync(RPATH);
-	}
+function addToFile(data) {
 
+	fs.writeFile(RPATH+'/'+FILENAME, JSON.stringify(data), 'utf8', function(err) {
+		if (err) 
+			console.log(err);
+	});
+}
+
+function getCurrentRegistry () {
 	//Fetch current registry
 	//TODO: Think of a better way to manage this, we can use exec but
 	//TODO: that is also not a very good idea
 	var rc = require('rc')('npm');
 	var url = ((rc.registry).slice(-1) === '/' )? rc.registry : rc.registry + '/';
 
+	return url;
+}
+
+function initRegistryFile(data) {
+	//Convert file data to Object -- At this point it will be blank
+	//TODO: Have to check if data is there
+	//TODO: If data is there then normal additon will happen only if it's not there
+	console.log('then coming here');
+
+	var url = getCurrentRegistry();
+
+	var currData = fetchFileData(data);
+
+	//Adding default entry
+	currData.push({name: 'Default', active: true, url: url});
+	//Convert back to JSON string
+	addToFile(currData);
+}
+
+function setup() {
+	//Create npmregistry
+	if (!fs.existsSync(RPATH)) {
+		//Create file
+		fs.mkdirSync(RPATH);
+	}
 	//Save current registry to registry file if its npmjs default registry
 	//TODO : Will check for npmjs thing later, right now considering current one as default
 
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
-		if (err){
-			console.log(err);
-    		//TODO: Create file here and call add data function
-		} else {
-			//Convert file data to Object -- At this point it will be blank
-			//TODO: Have to check if data is there
-			//TODO: If data is there then normal additon will happen only if it's not there
-			var currData = fetchFileData(data);
-			//Adding default entry
-			currData.push({name: 'Default', active: true, url: url});
-			//Convert back to JSON string
-			var newData = JSON.stringify(currData);
-			fs.writeFile(RPATH+'/'+FILENAME, newData, 'utf8', function(err) {
-				if (err) console.log(err);
+		if (err) {
+			fs.open(RPATH+'/'+FILENAME, 'w+', function readFileCallback(err, data){
+				console.log('this is another place');
+				initRegistryFile('');
 			});
+			//TODO: Create file here and call add data function
+		} else {
+			console.log('coming here');
+			initRegistryFile(data);
 		}
 	});
 }
@@ -114,7 +137,7 @@ function setup() {
 function list (args) {
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
 		if (err){
-			console.log(err);
+			setup();
     		//TODO: Create file here and call add data function
 		} else {
 			//Convert file data to Object -- At this point it will be blank
