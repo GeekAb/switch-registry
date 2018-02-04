@@ -155,7 +155,23 @@ function list (args) {
  * @param {[type]} args [description]
  */
 function add (args) {
-	console.log('add');
+	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
+		if (err){
+			setup();
+    		//TODO: Create file here and call add data function
+		} else {
+			//Convert file data to Object -- At this point it will be blank
+			var currData = fetchFileData(data);
+
+			for(var key in currData) {
+				console.log(showFormatedData(currData[key]));
+			}
+		}
+	});
+}
+
+function executeAdd() {
+	
 }
 
 /**
