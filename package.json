@@ -1,7 +1,7 @@
 {
   "name": "switch-registry",
   "version": "0.1.1",
-  "description": "Utility for making npm registry switch easy Edit",
+  "description": "Utility for making npm registry switch easy",
   "main": "index.js",
   "bin": {
     "switch-registry": "./bin/switch.js"
@@ -13,11 +13,8 @@
     "type": "git",
     "url": "git://github.com/GeekAb/switch-registry.git"
   },
-  "keywords": [
-    "npm",
-    "npm-registry"
-  ],
-  "author": "Abhishek Srivastava",
+  "keywords": ["npm", "npm-registry", "registry", "switch", "npmrc", "config"],
+  "author": "Abhishek Srivastava <nit.abhi85@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/GeekAb/switch-registry/issues"
