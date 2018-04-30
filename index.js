@@ -47,7 +47,7 @@ function fetchFileData(str) {
     try {
         data = JSON.parse(str);
     } catch (e) {
-        return [];
+        return {};
 	}
     return data;
 }
@@ -72,11 +72,11 @@ function showFormatedData(data) {
 }
 
 function addToFile(data) {
-
-	fs.writeFile(RPATH+'/'+FILENAME, JSON.stringify(data), 'utf8', function(err) {
-		if (err) 
-			console.log(err);
-	});
+  fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(data), "utf8", function(
+    err
+  ) {
+    if (err) console.log(err);
+  });
 }
 
 function getCurrentRegistry () {
@@ -98,7 +98,7 @@ function initRegistryFile(data) {
 	var currData = fetchFileData(data);
 
 	//Adding default entry
-	currData.push({name: 'Default', active: true, url: url});
+	currData['Default'] = {name: 'Default', active: true, url: url};
 	//Convert back to JSON string
 	addToFile(currData);
 }
@@ -151,7 +151,7 @@ function list (args) {
  */
 function add (args) {
 
-	var currData;
+	var currData = {};
 
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function (err, data){
 		if (err){
@@ -161,7 +161,7 @@ function add (args) {
 			//Convert file data to Object
 			currData = fetchFileData(data);
 
-			currData.push({ name: args[1], active: false, url: args[2] });
+			currData[args[1]] = { name: args[1], active: false, url: args[2] };
 
 			fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function(err) {
         		if (err) throw err;
@@ -190,5 +190,28 @@ function remove (args) {
  * @param  {[type]} args [description]
  */
 function change (args) {
-	console.log('change');
+	npm.load(function(err) {
+    if (err) return exit(err);
+
+    fs.readFile(RPATH + "/" + FILENAME, "utf8", function(err, data) {
+      if (err) {
+        setup();
+        //TODO: Create file here and call add data function
+      } else {
+        //Convert file data to Object
+		var currData = fetchFileData(data);
+
+		if (currData[args[1]]) {
+			var changeTo = currData[args[1]];
+		
+			npm.commands.config(["set", "registry", changeTo.url], function(err,data) {
+				if (err) return exit(err);
+				console.log("                        ");
+				var newR = npm.config.get("registry");
+				console.log(["", "   Registry has been set to: " + newR, ""]);
+			});
+		}
+      }
+    });
+  });
 }
