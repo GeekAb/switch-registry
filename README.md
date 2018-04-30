@@ -16,14 +16,13 @@ switch-registry {command} {args}
 switch-registry usage
 ```
 
-
-Command       Description                     
->----------------------------------------------
-- usage       | Display this help
-- list        | Display list of added registries
-- add         | Add a new registry
-- remove      | Remove an existing registry
-- change      | Change an existing registry
+**Possible commands**
+----------------------------------------------
+- usage ( Display this help )
+- list ( Display list of added registries )
+- add ( Add a new registry )
+- remove ( Remove an existing registry )
+- change ( Change an existing registry )
 
 
 **Task List**
@@ -35,5 +34,5 @@ Command       Description
 - [ ] Addition should happen for unique url and keys
 - [ ] Removing entries from list
 - [x] Changing existing entries
-- [x] Change registry should look for invalid entries and respond with proper message
-- [ ] Linking active value to .npmrc
+- [ ] Change registry should look for invalid entries and respond with proper message
+- [x] Changing/Setting up registry
