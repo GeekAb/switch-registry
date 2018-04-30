@@ -1,29 +1,29 @@
 [![Build Status](https://travis-ci.org/GeekAb/switch-registry.svg?branch=master)](https://travis-ci.org/GeekAb/switch-registry)
 
-**>Install**
+**Install**
 
 ```
 npm install switch-registry -g
 ```
 
-**>Run programm with**
+**Run programm with**
 ```
 switch-registry {command} {args}
 ```
 
-**>Check program usage with**
+**Check program usage with**
 ```
 switch-registry usage
 ```
 
+
+Command       Description                     
 >----------------------------------------------
->Command       Description                     
->----------------------------------------------
->usage       | Display this help
->list        | Display list of added registries
->add         | Add a new registry
->remove      | Remove an existing registry
->change      | Change an existing registry
+- usage       | Display this help
+- list        | Display list of added registries
+- add         | Add a new registry
+- remove      | Remove an existing registry
+- change      | Change an existing registry
 
 
 **Task List**
