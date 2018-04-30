@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var fs = require('fs');
@@ -35,7 +36,7 @@ function usage () {
 	console.log('add         | Add a new registry');
 	console.log('remove      | Remove an existing registry');
 	console.log('change      | Change an existing registry');
-};
+}
 
 /**
  * [fetchFileData description]
@@ -98,7 +99,7 @@ function initRegistryFile(data) {
 	var currData = fetchFileData(data);
 
 	//Adding default entry
-	currData['Default'] = {name: 'Default', active: true, url: url};
+	currData.Default = {name: 'Default', active: true, url: url};
 	//Convert back to JSON string
 	addToFile(currData);
 }
@@ -143,7 +144,7 @@ function list (args) {
 			}
 		}
 	});
-};
+}
 
 /**
  * Function will add new custom registry
@@ -191,7 +192,7 @@ function remove (args) {
  */
 function change (args) {
 	npm.load(function(err) {
-    if (err) return exit(err);
+    if (err) return '';
 
     fs.readFile(RPATH + "/" + FILENAME, "utf8", function(err, data) {
       if (err) {
@@ -205,7 +206,7 @@ function change (args) {
 			var changeTo = currData[args[1]];
 		
 			npm.commands.config(["set", "registry", changeTo.url], function(err,data) {
-				if (err) return exit(err);
+				if (err) return '';
 				console.log("                        ");
 				var newR = npm.config.get("registry");
 				console.log(["", "   Registry has been set to: " + newR, ""]);

@@ -8,13 +8,20 @@
     "npmsw": "./bin/switch.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jshint index.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/GeekAb/switch-registry.git"
   },
-  "keywords": ["npm", "npm-registry", "registry", "switch", "npmrc", "config"],
+  "keywords": [
+    "npm",
+    "npm-registry",
+    "registry",
+    "switch",
+    "npmrc",
+    "config"
+  ],
   "author": "Abhishek Srivastava <nit.abhi85@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -25,5 +32,8 @@
   "dependencies": {
     "npm": "^5.3.0",
     "rc": "^1.2.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.5"
   }
 }
