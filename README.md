@@ -1,3 +1,13 @@
+##Install
+
+npm install switch-registry -g
+
+##Run programm with
+switch-registry {command} {args}
+
+##Check program usage with
+switch-registry usage
+
 Task List
 
 - [x] Create base setup, file and folder structure

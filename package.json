@@ -4,7 +4,8 @@
   "description": "Utility for making npm registry switch easy",
   "main": "index.js",
   "bin": {
-    "switch-registry": "./bin/switch.js"
+    "switch-registry": "./bin/switch.js",
+    "npmsw": "./bin/switch.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
