@@ -49,8 +49,6 @@ function fetchFileData(str) {
     } catch (e) {
         return [];
 	}
-	console.log('finally coming here');
-	console.log(data);
     return data;
 }
 
@@ -95,8 +93,6 @@ function initRegistryFile(data) {
 	//Convert file data to Object -- At this point it will be blank
 	//TODO: Have to check if data is there
 	//TODO: If data is there then normal additon will happen only if it's not there
-	console.log('then coming here');
-
 	var url = getCurrentRegistry();
 
 	var currData = fetchFileData(data);
@@ -124,7 +120,6 @@ function setup() {
 			});
 			//TODO: Create file here and call add data function
 		} else {
-			console.log('coming here');
 			initRegistryFile(data);
 		}
 	});
@@ -155,23 +150,31 @@ function list (args) {
  * @param {[type]} args [description]
  */
 function add (args) {
-	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
+
+	var currData;
+
+	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function (err, data){
 		if (err){
 			setup();
     		//TODO: Create file here and call add data function
 		} else {
-			//Convert file data to Object -- At this point it will be blank
-			var currData = fetchFileData(data);
+			//Convert file data to Object
+			currData = fetchFileData(data);
 
-			for(var key in currData) {
-				console.log(showFormatedData(currData[key]));
-			}
+			currData.push({ name: args[1], active: false, url: args[2] });
+
+			fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function(err) {
+        		if (err) throw err;
+        		console.log("complete");
+      		});
 		}
 	});
 }
-
+/**
+ * 
+ */
 function executeAdd() {
-	
+
 }
 
 /**
