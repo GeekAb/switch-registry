@@ -14,14 +14,7 @@
     "type": "git",
     "url": "git://github.com/GeekAb/switch-registry.git"
   },
-  "keywords": [
-    "npm",
-    "npm-registry",
-    "registry",
-    "switch",
-    "npmrc",
-    "config"
-  ],
+  "keywords": ["npm", "npm-registry", "registry", "switch", "npmrc", "config"],
   "author": "Abhishek Srivastava <nit.abhi85@gmail.com>",
   "license": "MIT",
   "bugs": {
