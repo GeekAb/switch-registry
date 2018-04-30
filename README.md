@@ -6,5 +6,6 @@ Task List
 - [x] Adding new entries to list
 - [ ] Addition should happen for unique url and keys
 - [ ] Removing entries from list
-- [ ] Changing existing entries
+- [x] Changing existing entries
+- [x] Change registry should look for invalid entries and respond with proper message
 - [ ] Linking active value to .npmrc
