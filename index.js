@@ -15,7 +15,7 @@ var FILENAME = '.registryInfo';
  */
 
 module.exports.usage = usage;
-module.exports.setup = setup;
+module.exports.init = init;
 module.exports.ls = list;
 module.exports.list = list;
 module.exports.add = add;
@@ -32,6 +32,7 @@ function usage () {
 	console.log('----------------------------------------------');
 	console.log('Command       Description                     ');
 	console.log('----------------------------------------------');
+	console.log("init        | Initialize base files and entries");
 	console.log('usage       | Display this help');
 	console.log('ls          | Display list of added registries');
 	console.log('add         | Add a new registry');
@@ -105,7 +106,7 @@ function initRegistryFile(data) {
 	addToFile(currData);
 }
 
-function setup() {
+function init() {
 	//Create npmregistry
 	if (!fs.existsSync(RPATH)) {
 		//Create file
@@ -134,7 +135,7 @@ function setup() {
 function list (args) {
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
 		if (err){
-			setup();
+			init();
     		//TODO: Create file here and call add data function
 		} else {
 			//Convert file data to Object -- At this point it will be blank
@@ -157,7 +158,7 @@ function add (args) {
 
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function (err, data){
 		if (err){
-			setup();
+			init();
     		//TODO: Create file here and call add data function
 		} else {
 			//Convert file data to Object
@@ -187,7 +188,7 @@ function remove (args) {
 
 	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function (err, data){
 		if (err){
-			setup();
+			init();
     		//TODO: Create file here and call add data function
 		} else {
 			//Convert file data to Object
@@ -215,7 +216,7 @@ function change (args) {
 
     fs.readFile(RPATH + "/" + FILENAME, "utf8", function(err, data) {
       if (err) {
-        setup();
+        init();
         //TODO: Create file here and call add data function
       } else {
         //Convert file data to Object
