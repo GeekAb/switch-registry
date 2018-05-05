@@ -1,11 +1,13 @@
 [![Build Status](https://travis-ci.org/GeekAb/switch-registry.svg?branch=master)](https://travis-ci.org/GeekAb/switch-registry)
 
 Simple utility to setup and switch between npm registries.
+
 **Install**
 
 ```
 npm install switch-registry -g
 ```
+We can use *npmrs* in place of *switch-registry*
 
 **Run programm with**
 ```
@@ -61,6 +63,13 @@ switch-registry change <name>
 - [x] Changing existing entries
 - [ ] Change registry should look for invalid entries and respond with proper message
 - [x] Changing/Setting up registry
+- [ ] Add default support for popular npm repos 
+        npm -----  https://registry.npmjs.org/
+        cnpm ----  http://r.cnpmjs.org/
+        taobao --  https://registry.npm.taobao.org/
+        skimdb --  https://skimdb.npmjs.com/registry
+        yarn ----  https://registry.yarnpkg.com
+- [ ] Add testing function to test current entries and response time
 - [ ] Add short commands
 - [ ] Auto switch
     - [ ] Enable Auto switch

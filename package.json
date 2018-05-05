@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": {
     "switch-registry": "./bin/switch.js",
-    "npmsw": "./bin/switch.js"
+    "npmrs": "./bin/switch.js"
   },
   "scripts": {
     "test": "jshint index.js"
