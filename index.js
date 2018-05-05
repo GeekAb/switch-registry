@@ -162,13 +162,18 @@ function add (args) {
 		} else {
 			//Convert file data to Object
 			currData = fetchFileData(data);
+			
+			if (typeof currData[args[1]] === 'undefined') {
+				currData[args[1]] = { name: args[1], active: false, url: args[2] };
 
-			currData[args[1]] = { name: args[1], active: false, url: args[2] };
-
-			fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function(err) {
-        		if (err) throw err;
-        		console.log("complete");
-      		});
+				fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function(err) {
+					if (err) throw err;
+					console.log("complete");
+				});
+			}
+			else {
+				console.log('entry with this key already exist, Please use another key to add');
+			}
 		}
 	});
 }

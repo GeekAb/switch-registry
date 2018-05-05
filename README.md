@@ -32,7 +32,9 @@ switch-registry usage
 - [x] Show usage information
 - [x] Show list of existing entries
 - [x] Adding new entries to list
-- [ ] Addition should happen for unique url and keys
+- [ ] Addition should happen for unique url
+- [x] Addition should happen for unique keys
+- [ ] Addition should happen for valid urls
 - [x] Removing entries from list
 - [x] Changing existing entries
 - [ ] Change registry should look for invalid entries and respond with proper message

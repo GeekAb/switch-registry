@@ -1,6 +1,6 @@
 {
   "name": "switch-registry",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Utility for making npm registry switch easy",
   "main": "index.js",
   "bin": {
