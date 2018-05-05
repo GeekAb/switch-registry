@@ -61,3 +61,10 @@ switch-registry change <name>
 - [x] Changing existing entries
 - [ ] Change registry should look for invalid entries and respond with proper message
 - [x] Changing/Setting up registry
+- [ ] Add short commands
+- [ ] Auto switch
+    - [ ] Enable Auto switch
+    - [ ] Disable Auto switch
+    - [ ] Setup Auto switch for project/folder
+    - [ ] Remove Auto switch for project/folder
+- [ ] Update to ES6
