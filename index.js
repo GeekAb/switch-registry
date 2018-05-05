@@ -3,6 +3,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var rc = require('rc')('npm');
 var npm = require('npm');
 
 //We will store all registry links at user level in .npmregistry file
@@ -86,10 +87,11 @@ function getCurrentRegistry () {
 	//Fetch current registry
 	//TODO: Think of a better way to manage this, we can use exec but
 	//TODO: that is also not a very good idea
-	var rc = require('rc')('npm');
-	var url = ((rc.registry).slice(-1) === '/' )? rc.registry : rc.registry + '/';
-
-	return url;
+	try {
+		return ((rc.registry).slice(-1) === '/' )? rc.registry : rc.registry + '/';
+	} catch (e){
+		return "https://registry.npmjs.org/";
+	}
 }
 
 function initRegistryFile(data) {
