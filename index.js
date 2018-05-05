@@ -16,6 +16,7 @@ var FILENAME = '.registryInfo';
 
 module.exports.usage = usage;
 module.exports.setup = setup;
+module.exports.ls = list;
 module.exports.list = list;
 module.exports.add = add;
 module.exports.remove = remove;
@@ -32,7 +33,7 @@ function usage () {
 	console.log('Command       Description                     ');
 	console.log('----------------------------------------------');
 	console.log('usage       | Display this help');
-	console.log('list        | Display list of added registries');
+	console.log('ls          | Display list of added registries');
 	console.log('add         | Add a new registry');
 	console.log('remove      | Remove an existing registry');
 	console.log('change      | Change an existing registry');
@@ -171,19 +172,32 @@ function add (args) {
 		}
 	});
 }
-/**
- * 
- */
-function executeAdd() {
-
-}
 
 /**
  * Function will remove existing custom registry by name
  * @param  {[type]} args [description]
  */
 function remove (args) {
-	console.log('remove');
+		var currData = {};
+
+	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function (err, data){
+		if (err){
+			setup();
+    		//TODO: Create file here and call add data function
+		} else {
+			//Convert file data to Object
+			currData = fetchFileData(data);
+
+			if (currData[args[1]]) {
+				delete currData[args[1]];
+
+				fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function(err) {
+        			if (err) throw err;
+        			console.log("complete");
+      			});
+			}
+		}
+	});
 }
 
 /**

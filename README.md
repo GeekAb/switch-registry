@@ -19,7 +19,8 @@ switch-registry usage
 **Possible commands**
 ----------------------------------------------
 - usage ( Display this help )
-- list ( Display list of added registries )
+- ls ( Display list of added registries )
+- list ( Same as ls )
 - add ( Add a new registry )
 - remove ( Remove an existing registry )
 - change ( Change an existing registry )
@@ -32,7 +33,7 @@ switch-registry usage
 - [x] Show list of existing entries
 - [x] Adding new entries to list
 - [ ] Addition should happen for unique url and keys
-- [ ] Removing entries from list
+- [x] Removing entries from list
 - [x] Changing existing entries
 - [ ] Change registry should look for invalid entries and respond with proper message
 - [x] Changing/Setting up registry
