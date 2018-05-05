@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/GeekAb/switch-registry.svg?branch=master)](https://travis-ci.org/GeekAb/switch-registry)
 
+Simple utility to setup and switch between npm registries.
 **Install**
 
 ```
@@ -18,12 +19,33 @@ switch-registry usage
 
 **Possible commands**
 ----------------------------------------------
+- init ( Initialize required files and entries )
 - usage ( Display this help )
 - ls ( Display list of added registries )
 - list ( Same as ls )
 - add ( Add a new registry )
 - remove ( Remove an existing registry )
 - change ( Change an existing registry )
+
+**List all npm registries**
+```
+switch-registry ls
+```
+
+**Add new npm registry to list**
+```
+switch-registry add <name> <url>
+```
+
+**Remove existing npm registry from list**
+```
+switch-registry remove <name>
+```
+
+**Change to another npm registry from list**
+```
+switch-registry change <name>
+```
 
 
 **Task List**
