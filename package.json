@@ -1,5 +1,5 @@
 {
-  "name": "npmrs",
+  "name": "switch-registry",
   "version": "1.0.2",
   "description": "Utility for making npm registry switch easy",
   "main": "index.js",
