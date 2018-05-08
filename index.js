@@ -15,7 +15,7 @@ var FILENAME = '.registryInfo';
  * @public
  */
 
-// module.exports.usage = usage;
+module.exports.usage = usage;
 module.exports.init = init;
 module.exports.ls = list;
 module.exports.list = list;
@@ -23,7 +23,7 @@ module.exports.add = add;
 module.exports.remove = remove;
 module.exports.change = change;
 
-const checkArgs = (possibleActions, cmd) => {
+var checkArgs = function(possibleActions, cmd) {
 	return possibleActions.filter(data => data === cmd).length;
 }
 
@@ -31,7 +31,7 @@ const checkArgs = (possibleActions, cmd) => {
  * [usage description]
  * @return {[type]} [description]
  */
-const usage = () => {
+var usage = function() {
 	console.log('You can run Switch Registry as ');
 	console.log('switch-registry {command} {arguments}');
 	console.log('----------------------------------------------');
@@ -51,7 +51,7 @@ const usage = () => {
  * @param  {[type]}  str [description]
  * @return {Boolean}     [description]
  */
-const fetchFileData = (str) => {
+var fetchFileData = function(str) {
 	var data = '';
     try {
         return JSON.parse(str);

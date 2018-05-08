@@ -1,20 +1,19 @@
 #!/usr/bin/env node
 'use strict';
-let fs = require('fs');
+var fs = require('fs');
 
-let switcher = require('../index.js');
+var switcher = require('../index.js');
 
 //We will store all registry links at user level in .npmregistry file
-const RPATH = process.env.HOME + '/.npmregistry';
-const FILENAME = '.registryInfo';
+var RPATH = process.env.HOME + '/.npmregistry';
+var FILENAME = '.registryInfo';
 
-const possibleActions = ['usage','init','ls','list','add','remove','change'];
+var possibleActions = ['usage','init','ls','list','add','remove','change'];
 
 // Delete the 0 and 1 argument (node and switch.js)
-const args = process.argv.splice(process.execArgv.length + 2);
-console.log(checkArgs(possibleActions, args[0]));
+var args = process.argv.splice(process.execArgv.length + 2);
 // Retrieve the first argument as command to be followed
-const cmd = checkArgs(possibleActions, args[0]) > 0 ? args[0] : 'usage';
+var cmd = checkArgs(possibleActions, args[0]) > 0 ? args[0] : 'usage';
 
 if (!fs.existsSync(RPATH)) {
 	switcher.setup();
