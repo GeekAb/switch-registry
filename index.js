@@ -28,7 +28,7 @@ module.exports.change = change;
 // };
 
 var checkArgs = function (possibleActions, cmd) {
-	for (var act of possibleActions) {
+	for (var act in possibleActions) {
   		if (act === cmd) {
     		return true;
   		}
