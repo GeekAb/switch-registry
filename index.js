@@ -23,9 +23,17 @@ module.exports.add = add;
 module.exports.remove = remove;
 module.exports.change = change;
 
-var checkArgs = function(possibleActions, cmd) {
-	return possibleActions.filter(data => data === cmd).length;
-}
+// var checkArgs = function(possibleActions, cmd) {
+// 	return possibleActions.filter(data => data === cmd).length;
+// };
+
+var checkArgs = function (possibleActions, cmd) {
+	for (var act of possibleActions) {
+  		if (act === cmd) {
+    		return true;
+  		}
+	}
+};
 
 /**
  * [usage description]
@@ -43,7 +51,7 @@ var usage = function() {
 	console.log('add         | Add a new registry');
 	console.log('remove      | Remove an existing registry');
 	console.log('change      | Change an existing registry');
-}
+};
 
 
 /**
@@ -59,7 +67,7 @@ var fetchFileData = function(str) {
 		return {}; //Just return blank if there is any error
 		//TODO : Need to check if this failure will case any issue.
 	}
-}
+};
 
 function showFormatedData(data) {
 	var displayStr = '';
