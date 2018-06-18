@@ -16,7 +16,7 @@ switch-registry {command} {args}
 
 **Check program usage with**
 ```
-switch-registry usage
+switch-registry or switch-registry usage
 ```
 
 **Possible commands**
@@ -27,7 +27,8 @@ switch-registry usage
 - list ( Same as ls )
 - add ( Add a new registry )
 - remove ( Remove an existing registry )
-- change ( Change an existing registry )
+- use ( Change an existing registry )
+- change ( Same as use )
 
 **List all npm registries**
 ```
@@ -46,7 +47,7 @@ switch-registry remove <name>
 
 **Change to another npm registry from list**
 ```
-switch-registry change <name>
+switch-registry use <name>
 ```
 
 
@@ -63,6 +64,7 @@ switch-registry change <name>
 - [x] Changing existing entries
 - [ ] Change registry should look for invalid entries and respond with proper message
 - [x] Changing/Setting up registry
+- [ ] Add unit test cases
 - [ ] Add default support for popular npm repos 
         npm -----  https://registry.npmjs.org/
         cnpm ----  http://r.cnpmjs.org/
