@@ -8,24 +8,24 @@ var switcher = require('../index.js');
 var RPATH = process.env.HOME + '/.npmregistry';
 var FILENAME = '.registryInfo';
 
-var possibleActions = ['usage','init','ls','list','add','remove','change'];
+var possibleActions = ['usage', 'init', 'ls', 'list', 'add', 'remove', 'change'];
 
 // Delete the 0 and 1 argument (node and switch.js)
 var args = process.argv.splice(process.execArgv.length + 2);
 // Retrieve the first argument as command to be followed
-var cmd = checkArgs(possibleActions, args[0]) > 0 ? args[0] : 'usage';
+var cmd = switcher.checkArgs(possibleActions, args[0]) > 0 ? args[0] : "usage";
 
 if (!fs.existsSync(RPATH)) {
-	switcher.setup();
+    switcher.setup();
 } else {
-	fs.readFile(RPATH+'/'+FILENAME, 'utf8', function readFileCallback(err, data){
-		if (err){
-			switcher.setup();
-		} else {
-			if(!data)
-				switcher.setup();
-		}
-	});
+    fs.readFile(RPATH + '/' + FILENAME, 'utf8', function readFileCallback(err, data) {
+        if (err) {
+            switcher.setup();
+        } else {
+            if (!data)
+                switcher.setup();
+        }
+    });
 }
 
 switcher[cmd](args);
