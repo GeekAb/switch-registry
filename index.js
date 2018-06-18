@@ -70,7 +70,7 @@ function usage (message) {
  * @param  {[type]}  str [description]
  * @return {Boolean}     [description]
  */
-var fetchFileData = function (str) {
+function fetchFileData (str) {
     var data = "";
     try {
         return JSON.parse(str);
