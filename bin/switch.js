@@ -8,7 +8,7 @@ var switcher = require('../index.js');
 var RPATH = process.env.HOME + '/.npmregistry';
 var FILENAME = '.registryInfo';
 
-var possibleActions = ['usage', 'init', 'ls', 'list', 'add', 'remove', 'change'];
+var possibleActions = ['usage', 'init', 'ls', 'list', 'add', 'remove', 'change', 'use'];
 
 // Delete the 0 and 1 argument (node and switch.js)
 var args = process.argv.splice(process.execArgv.length + 2);
