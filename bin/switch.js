@@ -13,7 +13,7 @@ var possibleActions = ['usage', 'init', 'ls', 'list', 'add', 'remove', 'change']
 // Delete the 0 and 1 argument (node and switch.js)
 var args = process.argv.splice(process.execArgv.length + 2);
 // Retrieve the first argument as command to be followed
-var cmd = switcher.checkArgs(possibleActions, args[0]) > 0 ? args[0] : "usage";
+var cmd = switcher.checkArgs(possibleActions, args[0]) >= 0 ? args[0] : "usage";
 
 if (!fs.existsSync(RPATH)) {
     switcher.setup();

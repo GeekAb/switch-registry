@@ -25,11 +25,7 @@ module.exports.change = change;
 module.exports.checkArgs = checkArgs;
 
 function checkArgs (possibleActions, cmd) {
-    for (var act in possibleActions) {
-        if (act === cmd) {
-            return true;
-        }
-    }
+    return possibleActions.indexOf(cmd);
 }
 
 /**
