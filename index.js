@@ -5,9 +5,13 @@ var fs = require("fs");
 var rc = require("rc")("npm");
 var npm = require("npm");
 
+var STATIC = require("./constant");
+
 //We will store all registry links at user level in .npmregistry file
 var RPATH = process.env.HOME + "/.npmregistry";
 var FILENAME = ".registryInfo";
+
+
 
 /**
  * Module exports.
@@ -24,7 +28,7 @@ module.exports.use = change;
 module.exports.change = change;
 module.exports.checkArgs = checkArgs;
 
-function checkArgs (possibleActions, cmd) {
+function checkArgs(possibleActions, cmd) {
     return possibleActions.indexOf(cmd);
 }
 
@@ -32,32 +36,32 @@ function checkArgs (possibleActions, cmd) {
  * [usage description]
  * @return {[type]} [description]
  */
-function usage (message) {
+function usage(message) {
 
     if (message === "error") {
         console.log("Oopps there is something wrong. Check your params.");
     }
 
-    console.log("");
-    console.log("   You can run Switch Registry as ");
-    console.log("");
-    console.log("   switch-registry {command} {arguments}");
-    console.log("");
-    console.log("   ----------------------------------------------");
-    console.log("   Command       Description                     ");
-    console.log("   ----------------------------------------------");
-    console.log("   init        | Initialize base files and entries");
-    console.log("   usage       | Display this help");
-    console.log("   ls          | Display list of added registries");
-    console.log("   add         | Add a new registry");
-    console.log("   remove      | Remove an existing registry");
-    console.log("   use         | Change to other existing registry");
-    console.log("");
-    console.log("   Short Command npmrs");
-    console.log("   --------------------");
-    console.log("   npmrs {command} {arguments}");
-    console.log("");
+    console.log(`   
+        You can run Switch Registry as 
+        ${STATIC.COLORS.FgGreen}
+        switch-registry {command} {arguments}
+        ${STATIC.COLORS.Reset}
+        ----------------------------------------------
+        Command         Description
+        ----------------------------------------------
+        init        |   Initialize base files and entries
+        usage       |   Display this help
+        ls          |   Display list of added registries
+        add         |   Add a new registry
+        remove      |   Remove an existing registry
+        use         |   Change to other existing registry
 
+        Short Command npmrs
+        --------------------
+        npmrs {command} {arguments}
+    
+    `);
     return '';
 }
 
@@ -66,7 +70,7 @@ function usage (message) {
  * @param  {[type]}  str [description]
  * @return {Boolean}     [description]
  */
-function fetchFileData (str) {
+function fetchFileData(str) {
     var data = "";
     try {
         return JSON.parse(str);
@@ -186,30 +190,36 @@ function list(args) {
 function add(args) {
     var currData = {};
 
-    fs.readFile(RPATH + "/" + FILENAME, "utf8", function (err, data) {
-        if (err) {
-            init();
-            //TODO: Create file here and call add data function
-        } else {
-            //Convert file data to Object
-            currData = fetchFileData(data);
+    /* Proceed only if parameters are all valid */
+    if (checkRequiredParams(args.length, STATIC.REQ_PARAM_LEN.add) && validateUrl(args[2] && validateKey(args[1])) ) {
 
-            if (typeof currData[args[1]] === "undefined") {
-                currData[args[1]] = { name: args[1], active: false, url: args[2] };
-
-                fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function (
-                    err
-                ) {
-                    if (err) throw err;
-                    console.log("complete");
-                });
+        fs.readFile(RPATH + "/" + FILENAME, "utf8", function (err, data) {
+            if (err) {
+                init();
+                //TODO: Create file here and call add data function
             } else {
-                console.log(
-                    "entry with this key already exist, Please use another key to add"
-                );
+                //Convert file data to Object
+                currData = fetchFileData(data);
+
+                if (typeof currData[args[1]] === "undefined") {
+                    currData[args[1]] = { name: args[1], active: false, url: args[2] };
+
+                    fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function (
+                        err
+                    ) {
+                        if (err) throw err;
+                        console.log("complete");
+                    });
+                } else {
+                    console.log(`${STATIC.COLORS.FgRed}Another entry with key "${args[1]}" already exist, Please use another key to add
+                    ${STATIC.COLORS.Reset}`);
+                }
             }
-        }
-    });
+        });
+    }
+    else {
+        console.log('error');
+    }
 }
 
 /**
@@ -273,4 +283,34 @@ function change(args) {
             }
         });
     });
+}
+
+function showErrors(options) {
+
+}
+
+/**
+ * Function will validate if required number of parameters are passed
+ * @param  number argsLength [length of parameters passed]
+ * @param  number requiredLength [length of required parameters]
+ * @return boolean
+ */
+function checkRequiredParams (argsLength, requiredLength) {
+    if ((argsLength - 1) < requiredLength) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Function will validate given url
+ * @param  string url; return boolean
+ */
+function validateUrl(url) {
+    return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(url);
+}
+
+function validateKey(key) {
+    return /^[a-z0-9]+$/i.test(key);
 }
