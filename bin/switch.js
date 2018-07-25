@@ -16,14 +16,14 @@ var args = process.argv.splice(process.execArgv.length + 2);
 var cmd = switcher.checkArgs(possibleActions, args[0]) >= 0 ? args[0] : "usage";
 
 if (!fs.existsSync(RPATH)) {
-    switcher.setup();
+    switcher.init();
 } else {
     fs.readFile(RPATH + '/' + FILENAME, 'utf8', function readFileCallback(err, data) {
         if (err) {
-            switcher.setup();
+            switcher.init();
         } else {
             if (!data)
-                switcher.setup();
+                switcher.init();
         }
     });
 }
