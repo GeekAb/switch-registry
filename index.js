@@ -150,7 +150,6 @@ function init() {
                 err,
                 data
             ) {
-                console.log("this is another place");
                 initRegistryFile("");
             });
             //TODO: Create file here and call add data function
@@ -191,7 +190,7 @@ function add(args) {
     var currData = {};
 
     /* Proceed only if parameters are all valid */
-    if (checkRequiredParams(args.length, STATIC.REQ_PARAM_LEN.add) && validateUrl(args[2] && validateKey(args[1])) ) {
+    if (checkRequiredParams(args.length, STATIC.REQ_PARAM_LEN.add) && validateUrl(args[2]) && validateKey(args[1]))  {
 
         fs.readFile(RPATH + "/" + FILENAME, "utf8", function (err, data) {
             if (err) {
@@ -208,7 +207,7 @@ function add(args) {
                         err
                     ) {
                         if (err) throw err;
-                        console.log("complete");
+                        console.log(`New registry entry with key ${args[1]} added successfully.`);
                     });
                 } else {
                     console.log(`${STATIC.COLORS.FgRed}Another entry with key "${args[1]}" already exist, Please use another key to add
@@ -218,7 +217,7 @@ function add(args) {
         });
     }
     else {
-        console.log('error');
+        console.log('Error. Please check params.');
     }
 }
 
