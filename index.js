@@ -11,8 +11,6 @@ var STATIC = require("./constant");
 var RPATH = process.env.HOME + "/.npmregistry";
 var FILENAME = ".registryInfo";
 
-
-
 /**
  * Module exports.
  * @public
@@ -37,7 +35,6 @@ function checkArgs(possibleActions, cmd) {
  * @return {[type]} [description]
  */
 function usage(message) {
-
     if (message === "error") {
         console.log("Oopps there is something wrong. Check your params.");
     }
@@ -62,7 +59,7 @@ function usage(message) {
         npmrs {command} {arguments}
     
     `);
-    return '';
+    return "";
 }
 
 /**
@@ -80,23 +77,20 @@ function fetchFileData(str) {
     }
 }
 
-function showFormatedData(data) {
-    var displayStr = "";
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (displayStr !== "") {
-                displayStr += " | ";
-            }
+/**
+ * [showFormatedData Function will show all added registries and mark currently active one]
+ * @param  {object}  data [will contain single entry of added registry]
+ */
+const showFormatedData = (data) => {
+    let activeMark = '';
 
-            if (key === "active" && data[key] === true) {
-                displayStr = ">  " + displayStr;
-            } else {
-                displayStr += data[key];
-            }
-        }
+    //Check and mark active registry with > symbol 
+    if(data.active === true) {
+        activeMark = '>';
     }
 
-    return displayStr;
+    console.log(` ${activeMark} `,`  ${data.name}    `,`${data.url}`);
+    return true;
 }
 
 function addToFile(data) {
@@ -176,7 +170,7 @@ function list(args) {
             var currData = fetchFileData(data);
 
             for (var key in currData) {
-                console.log(showFormatedData(currData[key]));
+                showFormatedData(currData[key]);
             }
         }
     });
@@ -190,8 +184,11 @@ function add(args) {
     var currData = {};
 
     /* Proceed only if parameters are all valid */
-    if (checkRequiredParams(args.length, STATIC.REQ_PARAM_LEN.add) && validateUrl(args[2]) && validateKey(args[1]))  {
-
+    if (
+        checkRequiredParams(args.length, STATIC.REQ_PARAM_LEN.add) &&
+        validateUrl(args[2]) &&
+        validateKey(args[1])
+    ) {
         fs.readFile(RPATH + "/" + FILENAME, "utf8", function (err, data) {
             if (err) {
                 init();
@@ -203,21 +200,26 @@ function add(args) {
                 if (typeof currData[args[1]] === "undefined") {
                     currData[args[1]] = { name: args[1], active: false, url: args[2] };
 
-                    fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function (
-                        err
-                    ) {
-                        if (err) throw err;
-                        console.log(`New registry entry with key ${args[1]} added successfully.`);
-                    });
+                    fs.writeFile(
+                        RPATH + "/" + FILENAME,
+                        JSON.stringify(currData),
+                        function (err) {
+                            if (err) throw err;
+                            console.log(
+                                `New registry entry with key ${args[1]} added successfully.`
+                            );
+                        }
+                    );
                 } else {
-                    console.log(`${STATIC.COLORS.FgRed}Another entry with key "${args[1]}" already exist, Please use another key to add
+                    console.log(`${STATIC.COLORS.FgRed}Another entry with key "${
+                        args[1]
+                        }" already exist, Please use another key to add
                     ${STATIC.COLORS.Reset}`);
                 }
             }
         });
-    }
-    else {
-        console.log('Error. Please check params.');
+    } else {
+        console.log("Error. Please check params.");
     }
 }
 
@@ -274,9 +276,31 @@ function change(args) {
                         data
                     ) {
                         if (err) return "";
-                        console.log("                        ");
                         var newR = npm.config.get("registry");
-                        console.log(["", "   Registry has been set to: " + newR, ""]);
+
+                        console.log(`  
+    npm registry is set to ${STATIC.COLORS.FgGreen}${newR}${STATIC.COLORS.Reset }
+    Updating configurations ....`);
+
+                        //Setting all active to false
+                        for(var key in currData) {
+                            if (currData.hasOwnProperty(key)) {
+                                currData[key].active = false;
+                            }
+                        }
+
+                        //Setting newly activated registry to active
+                        currData[args[1]].active = true;
+
+                        
+
+                        //Update settings with new changes
+                        fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function (
+                            err
+                        ) {
+                            if (err) throw err;
+                            console.log(`    All Done.!!!`);
+                        });
                     });
                 }
             }
@@ -284,9 +308,7 @@ function change(args) {
     });
 }
 
-function showErrors(options) {
-
-}
+function showErrors(options) { }
 
 /**
  * Function will validate if required number of parameters are passed
@@ -294,8 +316,8 @@ function showErrors(options) {
  * @param  number requiredLength [length of required parameters]
  * @return boolean
  */
-function checkRequiredParams (argsLength, requiredLength) {
-    if ((argsLength - 1) < requiredLength) {
+function checkRequiredParams(argsLength, requiredLength) {
+    if (argsLength - 1 < requiredLength) {
         return false;
     }
 
