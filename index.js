@@ -81,8 +81,8 @@ function fetchFileData(str) {
  * [showFormatedData Function will show all added registries and mark currently active one]
  * @param  {object}  data [will contain single entry of added registry]
  */
-const showFormatedData = (data) => {
-    let activeMark = '';
+function showFormatedData (data) {
+    var activeMark = '';
 
     //Check and mark active registry with > symbol 
     if(data.active === true) {
