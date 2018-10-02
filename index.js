@@ -302,6 +302,8 @@ function change(args) {
                             console.log(`    All Done.!!!`);
                         });
                     });
+                } else {
+                    console.log(` No registry exist with ${args[1]}. Please use switch-registry ls to list all existing entries.`);
                 }
             }
         });
