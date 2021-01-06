@@ -65,7 +65,7 @@ switch-registry use <name>
 - [ ] Change registry should look for invalid entries and respond with proper message
 - [x] Changing/Setting up registry
 - [ ] Add unit test cases
-- [ ] Add default support for popular npm repos 
+- [ ] Add default support for popular npm repos
         npm -----  https://registry.npmjs.org/
         cnpm ----  http://r.cnpmjs.org/
         taobao --  https://registry.npm.taobao.org/
@@ -79,3 +79,8 @@ switch-registry use <name>
     - [ ] Setup Auto switch for project/folder
     - [ ] Remove Auto switch for project/folder
 - [ ] Update to ES6
+
+**Updates**
+
+**Version 1.1.8**
+* Upgraded versions of all dependecies. 
