@@ -34,6 +34,6 @@
     "rc": "^1.2.8"
   },
   "devDependencies": {
-    "jshint": "^2.9.5"
+    "jshint": "^2.12.0"
   }
 }
