@@ -30,26 +30,34 @@ switch-registry or switch-registry usage
 - use ( Change an existing registry )
 - change ( Same as use )
 
-**List all npm registries**
+**List all registries**
 ```
 switch-registry ls
 ```
 
-**Add new npm registry to list**
+**Add new registry to list**
 ```
 switch-registry add <name> <url>
 ```
 
-**Remove existing npm registry from list**
+**Remove existing registry from list**
 ```
 switch-registry remove <name>
 ```
 
-**Change to another npm registry from list**
+**Change to another npm & yarn registry from list**
 ```
 switch-registry use <name>
 ```
 
+**Change to another npm registry from list**
+```
+switch-registry use <name> npm
+```
+**Change to another yarn registry from list**
+```
+switch-registry use <name> yarn
+```
 
 **Task List**
 
