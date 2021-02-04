@@ -12,11 +12,15 @@ We can use *npmrs* in place of *switch-registry*
 **Run programm with**
 ```
 switch-registry {command} {args}
+or
+npmrs {command} {args}
 ```
 
 **Check program usage with**
 ```
 switch-registry or switch-registry usage
+or
+npmrs or switch-registry usage
 ```
 
 **Possible commands**
