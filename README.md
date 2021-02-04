@@ -82,5 +82,20 @@ switch-registry use <name>
 
 **Updates**
 
+**Version 1.2.0**
+* Support for yarn registry update
+* By default following will change registry for both npm and yarn
+```
+switch-registry use <name>
+```
+* We need to pass another parameter npm or yarn to switch registry for that.
+For example, to change registry for yarn only
+```
+switch-registry use <name> yarn
+```
+
+**Version 1.1.9**
+* Bug fixes
+
 **Version 1.1.8**
-* Upgraded versions of all dependecies. 
+* Upgraded versions of all dependecies.

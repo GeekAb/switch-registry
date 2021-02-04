@@ -4,12 +4,15 @@
 var fs = require("fs");
 var rc = require("rc")("npm");
 var npm = require("npm");
+var path = require('path');
 
 var STATIC = require("./constant");
 
 //We will store all registry links at user level in .npmregistry file
 var RPATH = process.env.HOME + "/.npmregistry";
 var FILENAME = ".registryInfo";
+
+const YARNRC = path.join(process.env.HOME, '.yarnrc');
 
 /**
  * Module exports.
@@ -39,8 +42,8 @@ function usage(message) {
         console.log("Oopps there is something wrong. Check your params.");
     }
 
-    console.log(`   
-        You can run Switch Registry as 
+    console.log(`
+        You can run Switch Registry as
         ${STATIC.COLORS.FgGreen}
         switch-registry {command} {arguments}
         ${STATIC.COLORS.Reset}
@@ -57,8 +60,9 @@ function usage(message) {
         Short Command npmrs
         --------------------
         npmrs {command} {arguments}
-    
+
     `);
+    console.log(process.env.HOME);
     return "";
 }
 
@@ -84,7 +88,7 @@ function fetchFileData(str) {
 function showFormatedData (data) {
     var activeMark = '';
 
-    //Check and mark active registry with > symbol 
+    //Check and mark active registry with > symbol
     if(data.active === true) {
         activeMark = '>';
     }
@@ -257,6 +261,9 @@ function remove(args) {
  * @param  {[type]} args [description]
  */
 function change(args) {
+    let changeYarn = true;
+    let changeNpm = true;
+
     npm.load(function (err) {
         if (err) return "";
 
@@ -271,37 +278,56 @@ function change(args) {
                 if (currData[args[1]]) {
                     var changeTo = currData[args[1]];
 
-                    npm.commands.config(["set", "registry", changeTo.url], function (
-                        err,
-                        data
-                    ) {
-                        if (err) return "";
-                        var newR = npm.config.get("registry");
+                    const changeModifier = args[2] ? args[2] : "";
 
-                        console.log(`  
-    npm registry is set to ${STATIC.COLORS.FgGreen}${newR}${STATIC.COLORS.Reset }
+                    if(changeModifier === "yarn") changeNpm = false;
+                    else if(changeModifier === "npm") changeYarn = false;
+
+                    // Change Yarn registry
+                    if (changeYarn) {
+                        fs.writeFile(YARNRC, 'registry "' + changeTo.url + '"', function (err) {
+                            if (err) throw err;
+
+                            console.log(`
+    YARN Registry is set to: ${STATIC.COLORS.FgGreen}${changeTo.url}${STATIC.COLORS.Reset}
+                            `);
+                        });
+                    }
+
+                    //Change npm registry
+                    if(changeNpm) {
+                        npm.commands.config(["set", "registry", changeTo.url], function (
+                            err,
+                            data
+                        ) {
+                            if (err) return "";
+                            var newR = npm.config.get("registry");
+
+                            console.log(`
+    npm registry is set to ${STATIC.COLORS.FgGreen}${newR}${STATIC.COLORS.Reset}
     Updating configurations ....`);
 
-                        //Setting all active to false
-                        for(var key in currData) {
-                            if (currData.hasOwnProperty(key)) {
-                                currData[key].active = false;
+                            //Setting all active to false
+                            for (var key in currData) {
+                                if (currData.hasOwnProperty(key)) {
+                                    currData[key].active = false;
+                                }
                             }
-                        }
 
-                        //Setting newly activated registry to active
-                        currData[args[1]].active = true;
+                            //Setting newly activated registry to active
+                            currData[args[1]].active = true;
 
-                        
 
-                        //Update settings with new changes
-                        fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function (
-                            err
-                        ) {
-                            if (err) throw err;
-                            console.log(`    All Done.!!!`);
+
+                            //Update settings with new changes
+                            fs.writeFile(RPATH + "/" + FILENAME, JSON.stringify(currData), function (
+                                err
+                            ) {
+                                if (err) throw err;
+                                console.log(`    All Done.!!!`);
+                            });
                         });
-                    });
+                    }
                 } else {
                     console.log(` No registry exist with ${args[1]}. Please use switch-registry ls to list all existing entries.`);
                 }
